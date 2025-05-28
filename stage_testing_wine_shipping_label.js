@@ -10,7 +10,7 @@ const KAFKA_BROKERS = [
   "qgm011b0b.albertsons.com:9093"
     
 ];
-const KAFKA_TOPIC = 'OSPK_OSLM_SHIPPING_LABEL_PERF'; // Your specific topic
+const KAFKA_TOPIC = 'OSPK_OSLM_SHIPPING_LABEL_STG'; // Your specific topic
 const CLIENT_ID = 'acupick-producer-' + Date.now(); // Descriptive client ID
  
 // --- SASL/SCRAM Credentials ---
@@ -79,7 +79,7 @@ const randomOrderNumber = Math.floor(10000000 + Math.random() * 90000000).toStri
     "activityId": "99995577",
     "event": {
       "id": "CREATE_SHIPMENT_LABELS",
-      "eventTs": "2025-03-21T19:10:33.207555245Z",
+      "eventTs": "2025-05-21T19:10:33.207555245Z",
       "source": "Acupick"
     },
     "data": {

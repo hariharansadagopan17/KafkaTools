@@ -2,20 +2,26 @@ const { Kafka, logLevel } = require('kafkajs');
 
 // --- Configuration ---
 const KAFKA_BROKERS = [
-    "qgm011b06.albertsons.com:9093",
-    "qgm011b07.albertsons.com:9093",
-    "qgm011b08.albertsons.com:9093",
-    "qgm011b09.albertsons.com:9093",
-    "qgm011b0a.albertsons.com:9093",
-    "qgm011b0b.albertsons.com:9093",
+    "pgm010d0c.albertsons.com:9095",
+    "pgm010d0d.albertsons.com:9095",
+    "pgm010d0e.albertsons.com:9095",
+    "pgm010d0f.albertsons.com:9095",
+    "pgm010d10.albertsons.com:9095",
+    "pgm010d11.albertsons.com:9095",
+    "pgm010d12.albertsons.com:9095",
+    "pgm010d1d.albertsons.com:9095",
+    "pgm010d1e.albertsons.com:9095",
+    "pgm010d1f.albertsons.com:9095",
+    "pgm010d20.albertsons.com:9095",
+    "pgm010d21.albertsons.com:9095"
 ];
-const KAFKA_TOPIC = 'OSDT_ORDER_EVENTS_STAGE'; // Your specific topic
+const KAFKA_TOPIC = 'OSDT_ORDER_EVENTS'; // Your specific topic
 const CLIENT_ID = 'acupick-producer-' + Date.now(); // Descriptive client ID
 
 // --- SASL/SCRAM Credentials ---
 // !!! WARNING: Avoid hardcoding credentials in production. Use environment variables or secrets management. !!!
-const SASL_USERNAME = "OS03LM";
-const SASL_PASSWORD = "8dcTA8nih4SzkBRSsG1@M"; // Use process.env.KAFKA_PASSWORD in real apps!
+const SASL_USERNAME = "OS02LM";
+const SASL_PASSWORD = "LlYKnv0PSXDRh*6R"; // Use process.env.KAFKA_PASSWORD in real apps!
 
 // --- Message Details ---
 
@@ -25,36 +31,36 @@ const SASL_PASSWORD = "8dcTA8nih4SzkBRSsG1@M"; // Use process.env.KAFKA_PASSWORD
 
 // Define the payload as a JavaScript object first
 const payloadObject = {
-    "orderNumber": "48287259",
-    "fulfillmentOrderNumber": "48287259011",
+    "orderNumber": "23481849",
+    "fulfillmentOrderNumber": "23481849011",
     "messageSource": "DTILL",
-    "publishedTs": "2025-05-21T05:56:34.249738583",
+    "publishedTs": "2025-05-22T05:56:34.249738583",
     "storeNumber": "1502",
     "fulfillmentStoreNumber": null,
     "event": {
         "type": "SYSTEM",
         "uuid": "f39afcf8-5c95-4832-95e4-b9e1f9b08ddd",
         "id": "PAYMENT_COMPLETED",
-        "eventTs": "2025-05-21T05:56:34.249738583",
+        "eventTs": "2025-05-22T05:56:34.249738583",
         "source": "DTILL"
     },
     "data": {
         "domsJson": {
             "audit": {
-                "createDate": "2025-05-21T21:48:24.116Z",
-                "modifiedDate": "2025-05-21T05:56:34.246Z",
+                "createDate": "2025-05-22T21:48:24.116Z",
+                "modifiedDate": "2025-05-22T05:56:34.246Z",
                 "createdBy": "ECOMMERCE",
                 "modifiedBy": "PAYMENT_COMPLETED",
                 "auditLog": {
                     "FFO_CREATED": "2024-11-18T05:56:30.267",
-                    "RECORD_PICK_DETAILS": "2025-05-21T05:56:32.192",
-                    "UPDATE_FINAL_PRICE": "2025-05-21T05:56:33.206156002",
-                    "PAYMENT_REQUESTED": "2025-05-21T05:56:33.413023026",
-                    "TILLING_ORDER_RECEIVED": "2025-05-21T05:56:33.747Z",
-                    "PAYMENT_COMPLETED": "2025-05-21T05:56:34.246Z"
+                    "RECORD_PICK_DETAILS": "2025-05-22T05:56:32.192",
+                    "UPDATE_FINAL_PRICE": "2025-05-22T05:56:33.206156002",
+                    "PAYMENT_REQUESTED": "2025-05-22T05:56:33.413023026",
+                    "TILLING_ORDER_RECEIVED": "2025-05-22T05:56:33.747Z",
+                    "PAYMENT_COMPLETED": "2025-05-22T05:56:34.246Z"
                 }
             },
-            "orderNumber": "48287259",
+            "orderNumber": "23481849",
             "versionNumber": 1,
             "orderStatus": "PAYMENT_COMPLETED",
             "companyId": "1",
@@ -62,9 +68,9 @@ const payloadObject = {
             "isActive": true,
             "storeNumber": "1502",
             "modifiedReasonCode": "PAYMENT_COMPLETED",
-            "orderEditCutoffDate": "2025-05-21T08:00:00.000Z",
-            "orderCancelCutoffDate": "2025-05-21T10:00:00.000Z",
-            "orderCreatedDate": "2025-05-21T05:56:27.256Z",
+            "orderEditCutoffDate": "2025-05-22T08:00:00.000Z",
+            "orderCancelCutoffDate": "2025-05-22T10:00:00.000Z",
+            "orderCreatedDate": "2025-05-22T05:56:27.256Z",
             "fulfillmentSystem": "APS",
             "sourceInfo": {
                 "source": "ECOMMERCE",
@@ -137,7 +143,7 @@ const messageValue = JSON.stringify(payloadObject);
 // Your specified header
 const messageHeaders = {
     'serviceType': 'Delivery',
-    'orderNumber': "48287259",
+    'orderNumber': "23481849",
     'storeNumber': '1502',
     'eventId': 'PAYMENT_COMPLETED',
     'orderType': 'Albertsons',
@@ -153,7 +159,7 @@ const kafka = new Kafka({
     brokers: KAFKA_BROKERS,
     ssl: true, // Enable SSL
     sasl: {
-        mechanism: 'PLAIN', // Your required mechanism
+        mechanism: 'SCRAM-SHA-512', // Your required mechanism
         username: SASL_USERNAME,
         password: SASL_PASSWORD,
     },
